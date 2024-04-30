@@ -17,8 +17,10 @@
       :yaw.sync="yaw"
       :pitch.sync="pitch"
     >
-      Slot content
+      <p class="topic">消防安全隐患排查</p>
+      <button class="startbtn" @click="url = srcTour">开始</button>
     </v-pannellum>
+    <!-- // 控制器 -->
     <div class="controls">
       <label>
         <span>Type:</span>
@@ -51,6 +53,27 @@
         <span>Orientation</span>
       </label>
     </div>
+    <!-- // 抽屉 -->
+    <div :class="['infodrawer', isDrawerShow ? 'drawershow' : '']">
+      <div class="drawer-header">
+        <button type="button" class="drawer-close-btn" @click="onClose()">
+          &times;
+        </button>
+        <h3 class="drawer-title">{{ drawerTitle }}</h3>
+      </div>
+      <div className="drawer-body">
+          <img
+            :src="pic"
+            loading="lazy"
+            className="drawer-body__img"
+          />
+          <div className="drawer-body__text">
+            <p>
+              {{ msg }}
+            </p>
+          </div>
+        </div>
+    </div>
   </div>
 </template>
 
@@ -71,8 +94,14 @@ import nz from './cubemaps/nz.jpg'
 export default {
   data() {
     return {
+      // drawer
+      isDrawerShow: false,
+      drawerTitle: '',
+      msg: '',
+      pic: '',
+
       show: true,
-      hfov: 90,
+      hfov: 60,
       yaw: -90,
       pitch: 0,
       url: equirectangularUrl,
@@ -81,36 +110,17 @@ export default {
       isAutoRotationOn: false,
       isOrientationOn: false,
       hotSpots: [
-        {
-          pitch: 14.1,
-          yaw: 1.5,
-          type: 'info',
-          text: 'Click me to Google',
-          URL: 'https://google.com/',
-        },
-        {
-          pitch: 0,
-          yaw: -90,
-          type: 'info',
-          text: 'I am <b>bold</b> text.',
-        },
-        {
-          pitch: -0.9,
-          yaw: 144.4,
-          type: 'info',
-          text: 'Info 2',
-        },
       ],
       srcTour: {
         default: {
-          firstScene: 'livingroom',
+          firstScene: 'liftroom',
           author: 'Foo Bar',
           sceneFadeDuration: 1000,
         },
         scenes: {
           kitchen: {
             title: 'Kitchen',
-            hfov: 110,
+            hfov: 60,
             pitch: -3,
             yaw: 117,
             type: 'equirectangular',
@@ -129,7 +139,7 @@ export default {
           },
           liftroom: {
             title: 'Liftroom',
-            hfov: 110,
+            hfov: 60,
             pitch: -3,
             yaw: 117,
             type: 'equirectangular',
@@ -148,7 +158,7 @@ export default {
           },
           frontdoor: {
             title: 'Frontdoor',
-            hfov: 110,
+            hfov: 60,
             pitch: -3,
             yaw: 117,
             type: 'equirectangular',
@@ -163,11 +173,32 @@ export default {
                 targetYaw: -23,
                 targetPitch: 2,
               },
+              {
+                pitch: 30,
+                yaw: 55.8,
+                type: 'info',
+                text: '手动报警器',
+                // clickHandlerFunc: 'setShowDrawer("handwarning")',
+              },
+              {
+                pitch: 24,
+                yaw: 65,
+                type: 'info',
+                text: '隐藏式消防栓',
+              },
+              {
+                pitch: -10,
+                yaw: 75,
+                type: 'info',
+                text: '安全隐患',
+                cssClass: "warning-hotspot",
+                // clickHandlerFunc: () => setShowDrawer(DRAWER_TYPES.CEREMONY)
+              },
             ],
           },
           livingroom: {
             title: 'Livingroom',
-            hfov: 110,
+            hfov: 60,
             pitch: -3,
             yaw: 117,
             type: 'equirectangular',
@@ -197,6 +228,19 @@ export default {
       },
     }
   },
+  methods: {
+    onClose() {
+      this.isDrawerShow = false;
+    },
+    setShowDrawer(type) {
+      switch(key) {
+        case 'handwarning':
+          this.msg = '火灾报警系统中的一个设备类型，当人员发现火灾时，在火灾探测器没有探测到火灾的时候，人员手动按下手动报警按钮，报告火灾信号。正常情况下当手动报警按钮报警时，火灾发生的几率比火灾探测器要大的多，几乎没有误报的可能。因为手动报警按钮的报警出发条件是必须人工按下按钮启动。按下手动报警按钮的的时候过3-5秒钟手动报警按钮上的火警确认灯会点亮，这个状态灯表示火灾报警控制器已经收到火警信号，并且确认了现场位置。';
+          this.pic = './img/sdbjq.jpg';
+      };
+      this.isDrawerShow = true;
+    },
+  }
 }
 </script>
 
@@ -206,6 +250,90 @@ body,
 .app,
 .pannellum {
   height: 100%;
+}
+.topic {
+  font-size: 48px;
+  text-align: center;
+  margin-top: 20%;
+  margin-bottom: 40%;
+  width: 100vw;
+  font-weight: 600;
+  color: aquamarine;
+}
+.startbtn {
+  display: block;
+  margin: auto;
+  padding: 30px;
+  font-size: 36px;
+  color: #fff;
+  background: #07aff7;
+  border: 0;
+  border-radius: 5px;
+  width: 30%;
+  max-width: 240px;
+}
+.warning-hotspot {
+  height: 40px;
+  width: 40px;
+  opacity: 0.9;
+  background-image: url("./img/redwarning.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.infodrawer {
+  max-height: 92vh;
+  width: 100vw;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  background: #fff;
+  border-radius: 8px 8px 0 0;
+  transform: translateY(100%);
+  transition: 0.2s;
+}
+.drawershow {
+  transform: translateY(0);
+}
+
+.drawer-header {
+  position: relative;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+}
+
+.drawer-header .drawer-close-btn {
+  border: none;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 100%;
+  height: 32px;
+  width: 32px;
+  font-size: 24px;
+  margin: 16px;
+  cursor: pointer;
+}
+
+.drawer-body {
+  display: flex;
+  padding: 32px;
+  gap: 24px;
+}
+
+.drawer-body__img {
+  border-radius: 16px;
+  width: 40%;
+  max-width: 400px;
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.25);
+  height: 100%;
+}
+
+.drawer-body__text {
+  line-height: 1.5;
 }
 
 body {

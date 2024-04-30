@@ -233,8 +233,6 @@ export default {
 
 .default-slot {
   position: absolute;
-  left: 0;
-  bottom: 0;
   z-index: 2;
 }
 </style>
