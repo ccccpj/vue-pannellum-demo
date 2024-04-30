@@ -56,8 +56,10 @@
 
 <script>
 import equirectangularUrl from './equirectangular/wooden-lounge.png'
-import equirectangularUrlCube from './equirectangular/cube.jpg'
-import equirectangularUrlGrid from './equirectangular/grid.jpg'
+import equirectangularUrlLivingroom from './equirectangular/livingroom.jpg'
+import equirectangularUrlKitchen from './equirectangular/kitchen.jpg'
+import equirectangularUrlLiftroom from './equirectangular/liftroom.jpg'
+import equirectangularUrlFrontdoor from './equirectangular/frontdoor.jpg'
 
 import px from './cubemaps/px.jpg'
 import nx from './cubemaps/nx.jpg'
@@ -101,41 +103,91 @@ export default {
       ],
       srcTour: {
         default: {
-          firstScene: 'cube',
+          firstScene: 'livingroom',
           author: 'Foo Bar',
           sceneFadeDuration: 1000,
         },
         scenes: {
-          cube: {
-            title: 'Cube',
+          kitchen: {
+            title: 'Kitchen',
             hfov: 110,
             pitch: -3,
             yaw: 117,
             type: 'equirectangular',
-            panorama: equirectangularUrlCube,
-            hotSpots: [
-              {
-                pitch: -2.1,
-                yaw: -105,
-                type: 'scene',
-                text: 'Grid',
-                sceneId: 'grid',
-              },
-            ],
-          },
-          grid: {
-            title: 'Grid',
-            hfov: 110,
-            yaw: 5,
-            type: 'equirectangular',
-            panorama: equirectangularUrlGrid,
+            panorama: equirectangularUrlKitchen,
             hotSpots: [
               {
                 pitch: -0.6,
-                yaw: -77.1,
+                yaw: 107.1,
                 type: 'scene',
-                text: 'Cube',
-                sceneId: 'cube',
+                text: '客厅',
+                sceneId: 'livingroom',
+                targetYaw: -23,
+                targetPitch: 2,
+              },
+            ],
+          },
+          liftroom: {
+            title: 'Liftroom',
+            hfov: 110,
+            pitch: -3,
+            yaw: 117,
+            type: 'equirectangular',
+            panorama: equirectangularUrlLiftroom,
+            hotSpots: [
+              {
+                pitch: -10,
+                yaw: 180,
+                type: 'scene',
+                text: '前进',
+                sceneId: 'frontdoor',
+                targetYaw: 180,
+                targetPitch: 0,
+              },
+            ],
+          },
+          frontdoor: {
+            title: 'Frontdoor',
+            hfov: 110,
+            pitch: -3,
+            yaw: 117,
+            type: 'equirectangular',
+            panorama: equirectangularUrlFrontdoor,
+            hotSpots: [
+              {
+                pitch: -10,
+                yaw: -10,
+                type: 'scene',
+                text: '前进',
+                sceneId: 'liftroom',
+                targetYaw: -23,
+                targetPitch: 2,
+              },
+            ],
+          },
+          livingroom: {
+            title: 'Livingroom',
+            hfov: 110,
+            pitch: -3,
+            yaw: 117,
+            type: 'equirectangular',
+            panorama: equirectangularUrlLivingroom,
+            hotSpots: [
+              {
+                pitch: -0.6,
+                yaw: -177.1,
+                type: 'scene',
+                text: '门口',
+                sceneId: 'frontdoor',
+                targetYaw: -23,
+                targetPitch: 2,
+              },
+              {
+                pitch: -0.6,
+                yaw: -57.1,
+                type: 'scene',
+                text: '厨房',
+                sceneId: 'kitchen',
                 targetYaw: -23,
                 targetPitch: 2,
               },
