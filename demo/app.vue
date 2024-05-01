@@ -17,8 +17,10 @@
       :yaw.sync="yaw"
       :pitch.sync="pitch"
     >
-      <p class="topic">消防安全隐患排查</p>
-      <button class="startbtn" @click="url = srcTour">开始</button>
+      <div class="startup">
+        <div class="topic">消防安全隐患排查</div>
+        <button class="startbtn" @click="url = srcTour">开始</button>
+      </div>
     </v-pannellum>
     <!-- // 控制器 -->
     <!-- <div class="controls">
@@ -62,34 +64,30 @@
         <h3 class="drawer-title">{{ drawerTitle }}</h3>
       </div>
       <div className="drawer-body">
-          <img
-            :src="pic"
-            loading="lazy"
-            className="drawer-body__img"
-          />
-          <div className="drawer-body__text">
-            <p>
-              {{ msg }}
-            </p>
-          </div>
+        <img :src="pic" loading="lazy" className="drawer-body__img" />
+        <div className="drawer-body__text">
+          <p>
+            {{ msg }}
+          </p>
         </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import equirectangularUrl from './equirectangular/wooden-lounge.png'
-import equirectangularUrlLivingroom from './equirectangular/livingroom.jpg'
-import equirectangularUrlKitchen from './equirectangular/kitchen.jpg'
-import equirectangularUrlLiftroom from './equirectangular/liftroom.jpg'
-import equirectangularUrlFrontdoor from './equirectangular/frontdoor.jpg'
+import equirectangularUrl from './equirectangular/wooden-lounge.png';
+import equirectangularUrlLivingroom from './equirectangular/livingroom.jpg';
+import equirectangularUrlKitchen from './equirectangular/kitchen.jpg';
+import equirectangularUrlLiftroom from './equirectangular/liftroom.jpg';
+import equirectangularUrlFrontdoor from './equirectangular/frontdoor.jpg';
 
-import px from './cubemaps/px.jpg'
-import nx from './cubemaps/nx.jpg'
-import py from './cubemaps/py.jpg'
-import ny from './cubemaps/ny.jpg'
-import pz from './cubemaps/pz.jpg'
-import nz from './cubemaps/nz.jpg'
+import px from './cubemaps/px.jpg';
+import nx from './cubemaps/nx.jpg';
+import py from './cubemaps/py.jpg';
+import ny from './cubemaps/ny.jpg';
+import pz from './cubemaps/pz.jpg';
+import nz from './cubemaps/nz.jpg';
 
 export default {
   data() {
@@ -109,8 +107,7 @@ export default {
       cubemapUrls: { pz, px, nz, nx, py, ny },
       isAutoRotationOn: false,
       isOrientationOn: false,
-      hotSpots: [
-      ],
+      hotSpots: [],
       srcTour: {
         default: {
           firstScene: 'liftroom',
@@ -140,7 +137,7 @@ export default {
                 yaw: -86,
                 type: 'info',
                 text: '电器未使用 电源线未拔下',
-                cssClass: "warning-hotspot",
+                cssClass: 'warning-hotspot',
                 // clickHandlerFunc: () => setShowDrawer(DRAWER_TYPES.CEREMONY)
               },
               {
@@ -148,7 +145,7 @@ export default {
                 yaw: -71,
                 type: 'info',
                 text: '热水器排气口离电源过近',
-                cssClass: "warning-hotspot",
+                cssClass: 'warning-hotspot',
                 // clickHandlerFunc: () => setShowDrawer(DRAWER_TYPES.CEREMONY)
               },
               {
@@ -156,7 +153,7 @@ export default {
                 yaw: -140,
                 type: 'info',
                 text: '加热类电器距离过近',
-                cssClass: "warning-hotspot",
+                cssClass: 'warning-hotspot',
                 // clickHandlerFunc: () => setShowDrawer(DRAWER_TYPES.CEREMONY)
               },
             ],
@@ -235,7 +232,7 @@ export default {
                 yaw: -95,
                 type: 'info',
                 text: '常闭式防火门未正常关闭',
-                cssClass: "warning-hotspot",
+                cssClass: 'warning-hotspot',
                 // clickHandlerFunc: () => setShowDrawer(DRAWER_TYPES.CEREMONY)
               },
               {
@@ -243,7 +240,7 @@ export default {
                 yaw: -79,
                 type: 'info',
                 text: '消防通道内未发现杂物',
-                cssClass: "right-hotspot",
+                cssClass: 'right-hotspot',
                 // clickHandlerFunc: () => setShowDrawer(DRAWER_TYPES.CEREMONY)
               },
               {
@@ -270,7 +267,7 @@ export default {
                 yaw: 75,
                 type: 'info',
                 text: '消防栓旁堆放过多物品',
-                cssClass: "warning-hotspot",
+                cssClass: 'warning-hotspot',
                 // clickHandlerFunc: () => setShowDrawer(DRAWER_TYPES.CEREMONY)
               },
             ],
@@ -288,7 +285,7 @@ export default {
                 yaw: 52,
                 type: 'info',
                 text: '电视电源未关闭',
-                cssClass: "warning-hotspot",
+                cssClass: 'warning-hotspot',
                 // clickHandlerFunc: () => setShowDrawer(DRAWER_TYPES.CEREMONY)
               },
               {
@@ -296,7 +293,7 @@ export default {
                 yaw: 66,
                 type: 'info',
                 text: '电灯电源未关闭',
-                cssClass: "warning-hotspot",
+                cssClass: 'warning-hotspot',
                 // clickHandlerFunc: () => setShowDrawer(DRAWER_TYPES.CEREMONY)
               },
               {
@@ -304,7 +301,7 @@ export default {
                 yaw: -143,
                 type: 'info',
                 text: '电源线杂乱',
-                cssClass: "warning-hotspot",
+                cssClass: 'warning-hotspot',
                 // clickHandlerFunc: () => setShowDrawer(DRAWER_TYPES.CEREMONY)
               },
               {
@@ -329,22 +326,23 @@ export default {
           },
         },
       },
-    }
+    };
   },
   methods: {
     onClose() {
       this.isDrawerShow = false;
     },
     setShowDrawer(type) {
-      switch(key) {
+      switch (key) {
         case 'handwarning':
-          this.msg = '火灾报警系统中的一个设备类型，当人员发现火灾时，在火灾探测器没有探测到火灾的时候，人员手动按下手动报警按钮，报告火灾信号。正常情况下当手动报警按钮报警时，火灾发生的几率比火灾探测器要大的多，几乎没有误报的可能。因为手动报警按钮的报警出发条件是必须人工按下按钮启动。按下手动报警按钮的的时候过3-5秒钟手动报警按钮上的火警确认灯会点亮，这个状态灯表示火灾报警控制器已经收到火警信号，并且确认了现场位置。';
+          this.msg =
+            '火灾报警系统中的一个设备类型，当人员发现火灾时，在火灾探测器没有探测到火灾的时候，人员手动按下手动报警按钮，报告火灾信号。正常情况下当手动报警按钮报警时，火灾发生的几率比火灾探测器要大的多，几乎没有误报的可能。因为手动报警按钮的报警出发条件是必须人工按下按钮启动。按下手动报警按钮的的时候过3-5秒钟手动报警按钮上的火警确认灯会点亮，这个状态灯表示火灾报警控制器已经收到火警信号，并且确认了现场位置。';
           this.pic = './img/sdbjq.jpg';
-      };
+      }
       this.isDrawerShow = true;
     },
-  }
-}
+  },
+};
 </script>
 
 <style>
@@ -354,47 +352,57 @@ body,
 .pannellum {
   height: 100%;
 }
+.startup {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 100vw;
+  height: 100vh;
+}
 .topic {
   font-size: 48px;
-  text-align: center;
-  margin-top: 20%;
-  margin-bottom: 40%;
-  width: 100vw;
   font-weight: 600;
+  letter-spacing: 8px;
   color: aquamarine;
 }
 .startbtn {
   display: block;
-  margin: auto;
-  padding: 30px;
-  font-size: 36px;
+  cursor: pointer;
+  font-size: 24px;
+  padding: 12px 32px;
   color: #fff;
   background: #07aff7;
-  border: 0;
-  border-radius: 5px;
-  width: 30%;
-  max-width: 240px;
+  border: none;
+  border-radius: 8px;
+  letter-spacing: 4px;
 }
 .warning-hotspot {
   height: 40px;
   width: 40px;
   opacity: 0.9;
-  background-image: url("./img/redwarning.png");
+  background-image: url('./img/redwarning.png');
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
 }
 
-.warning-hotspot span, .right-hotspot span {
+.warning-hotspot span,
+.right-hotspot span {
   background: #fff !important;
   color: #000 !important;
+}
+
+.warning-hotspot:hover span:after,
+.right-hotspot:hover span:after {
+  border-color: rgb(255, 255, 255) transparent transparent transparent !important;
 }
 
 .right-hotspot {
   height: 40px;
   width: 40px;
   opacity: 0.9;
-  background-image: url("./img/right.png");
+  background-image: url('./img/right.png');
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;

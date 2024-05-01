@@ -8,16 +8,16 @@
   >
     <div class="info">{{ info }}</div>
     <div class="default-slot">
-      <slot/>
+      <slot />
     </div>
   </div>
 </template>
 
 <script>
-import 'pannellum'
-import 'pannellum/build/pannellum.css'
+import 'pannellum';
+import 'pannellum/build/pannellum.css';
 
-import _debounce from 'lodash.debounce'
+import _debounce from 'lodash.debounce';
 
 export default {
   props: {
@@ -40,23 +40,23 @@ export default {
     maxHfov: { type: Number, default: 120 },
     yaw: { type: Number, default: 0 },
     pitch: { type: Number, default: 0 },
-    crossOrigin: {type: String, default: 'anonymous' },
+    crossOrigin: { type: String, default: 'anonymous' },
   },
-  data () {
+  data() {
     return {
       viewer: null,
       info: '',
       rafId: -1,
-    }
+    };
   },
   computed: {
-    srcOption () {
+    srcOption() {
       if (typeof this.src === 'string') {
         return {
           type: 'equirectangular',
           panorama: this.src,
           hotSpots: this.hotSpots,
-        }
+        };
       } else if (typeof this.src === 'object') {
         if (this.src.px && this.src.ny) {
           return {
@@ -70,71 +70,71 @@ export default {
               this.src.ny,
             ],
             hotSpots: this.hotSpots,
-          }
+          };
         } else if (this.src.scenes) {
           return {
             default: this.src.default,
             scenes: this.src.scenes,
-          }
+          };
         } else {
-          console.error('[vue-pannellum] Unknown src type')
+          console.error('[vue-pannellum] Unknown src type');
         }
       } else {
-        console.error('[vue-pannellum] Unknown src type: ' + typeof this.src)
+        console.error('[vue-pannellum] Unknown src type: ' + typeof this.src);
       }
     },
   },
   watch: {
-    src (val) {
-      this.$el.innerHTML = ''
-      this.$nextTick(this.load)
+    src(val) {
+      this.$el.innerHTML = '';
+      this.$nextTick(this.load);
     },
-    hfov (val) {
-      if (this.viewer) this.viewer.setHfov(val, false)
+    hfov(val) {
+      if (this.viewer) this.viewer.setHfov(val, false);
     },
-    yaw (val) {
-      if (this.viewer) this.viewer.setYaw(val, false)
+    yaw(val) {
+      if (this.viewer) this.viewer.setYaw(val, false);
     },
-    pitch (val) {
-      if (this.viewer) this.viewer.setPitch(val, false)
+    pitch(val) {
+      if (this.viewer) this.viewer.setPitch(val, false);
     },
-    maxHfov (val) {
+    maxHfov(val) {
       if (this.viewer) {
-        this.viewer.setHfovBounds([this.minHfov, this.maxHfov])
+        this.viewer.setHfovBounds([this.minHfov, this.maxHfov]);
       }
     },
-    minHfov (val) {
+    minHfov(val) {
       if (this.viewer) {
-        this.viewer.setHfovBounds([this.minHfov, this.maxHfov])
+        this.viewer.setHfovBounds([this.minHfov, this.maxHfov]);
       }
     },
-    autoRotate (val) {
+    autoRotate(val) {
       if (val) {
-        this.viewer.startAutoRotate()
+        this.viewer.startAutoRotate();
       } else {
-        this.viewer.stopAutoRotate()
-        if (this.orientation) this.viewer.startOrientation()
+        this.viewer.stopAutoRotate();
+        if (this.orientation) this.viewer.startOrientation();
       }
     },
-    orientation (val) {
+    orientation(val) {
       if (val) {
-        this.viewer.startOrientation()
+        this.viewer.startOrientation();
       } else {
-        this.viewer.stopOrientation()
-        if (this.autoRotate) this.viewer.startAutoRotate()
+        this.viewer.stopOrientation();
+        if (this.autoRotate) this.viewer.startAutoRotate();
       }
     },
   },
-  mounted () {
-    this.load()
-    this.rafId = window.requestAnimationFrame(this.loop)
+  mounted() {
+    this.load();
+    this.rafId = window.requestAnimationFrame(this.loop);
   },
   beforeDestroy() {
-    this.viewer.destroy()
-    window.cancelAnimationFrame(this.rafId)
+    this.viewer.destroy();
+    window.cancelAnimationFrame(this.rafId);
   },
   methods: {
-    load () {
+    load() {
       let options = {
         autoLoad: this.autoLoad,
         autoRotate: this.autoRotate === true ? -2 : 0,
@@ -153,58 +153,58 @@ export default {
         // haov: 149.87,
         // vaov: 54.15,
         ...this.srcOption,
-      }
+      };
       // console.log('options', options)
-      this.viewer = window.pannellum.viewer(this.$el, options)
+      this.viewer = window.pannellum.viewer(this.$el, options);
       this.viewer.on('load', () => {
-        this.$emit('load')
-      })
+        this.$emit('load');
+      });
       this.viewer.on('error', (err) => {
-        this.$emit('error', err)
-      })
+        this.$emit('error', err);
+      });
       if (this.showInfo === false) {
-        let el = this.$el.querySelector('.pnlm-panorama-info')
+        let el = this.$el.querySelector('.pnlm-panorama-info');
         // Note: Using display will not work when in tour mode and switch scene
-        if (el) el.style.visibility = 'hidden'
+        if (el) el.style.visibility = 'hidden';
       }
       if (this.showZoom === false) {
-        let el = this.$el.querySelector('.pnlm-zoom-controls')
-        if (el) el.style.display = 'none'
+        let el = this.$el.querySelector('.pnlm-zoom-controls');
+        if (el) el.style.display = 'none';
       }
       if (this.showFullscreen === false) {
-        let el = this.$el.querySelector('.pnlm-fullscreen-toggle-button')
-        if (el) el.style.display = 'none'
+        let el = this.$el.querySelector('.pnlm-fullscreen-toggle-button');
+        if (el) el.style.display = 'none';
       }
     },
-    loop () {
-      this.rafId = window.requestAnimationFrame(this.loop)
-      let hfov = this.viewer.getHfov()
-      let yaw = this.viewer.getYaw()
-      let pitch = this.viewer.getPitch()
-      if (pitch > 90) pitch = 90
-      else if (pitch < -90) pitch = -90
-      if (hfov != this.hfov) this.$emit('update:hfov', hfov)
-      if (yaw != this.yaw) this.$emit('update:yaw', yaw)
-      if (pitch != this.pitch) this.$emit('update:pitch', pitch)
+    loop() {
+      this.rafId = window.requestAnimationFrame(this.loop);
+      let hfov = this.viewer.getHfov();
+      let yaw = this.viewer.getYaw();
+      let pitch = this.viewer.getPitch();
+      if (pitch > 90) pitch = 90;
+      else if (pitch < -90) pitch = -90;
+      if (hfov != this.hfov) this.$emit('update:hfov', hfov);
+      if (yaw != this.yaw) this.$emit('update:yaw', yaw);
+      if (pitch != this.pitch) this.$emit('update:pitch', pitch);
     },
-    onMouseUp () {
-      if (this.debug) this.info += ' mu'
-      this.debounceRotate()
+    onMouseUp() {
+      if (this.debug) this.info += ' mu';
+      this.debounceRotate();
     },
-    onTouchMove () {
-      if (this.debug) this.info += ' tm'
+    onTouchMove() {
+      if (this.debug) this.info += ' tm';
     },
-    onTouchEnd () {
-      if (this.debug) this.info += ' te'
-      this.debounceRotate()
+    onTouchEnd() {
+      if (this.debug) this.info += ' te';
+      this.debounceRotate();
     },
-    debounceRotate: _debounce(function () {
+    debounceRotate: _debounce(function() {
       // priority of orientation is higher
-      if (this.orientation) this.viewer.startOrientation()
-      else if (this.autoRotate) this.viewer.startAutoRotate()
+      if (this.orientation) this.viewer.startOrientation();
+      else if (this.autoRotate) this.viewer.startAutoRotate();
     }, 3000),
   },
-}
+};
 </script>
 
 <style>
