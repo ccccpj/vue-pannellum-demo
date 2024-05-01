@@ -3,7 +3,8 @@
   "version": "0.5.3",
   "main": "src/vue-pannellum.vue",
   "scripts": {
-    "dev": "parcel demo/index.html --port 5200"
+    "dev": "parcel demo/index.html --port 5200",
+    "build": "parcel build demo/index.html"
   },
   "keywords": [
     "vue",
