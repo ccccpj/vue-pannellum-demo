@@ -102,7 +102,7 @@ export default {
 
       show: true,
       hfov: 60,
-      yaw: -90,
+      yaw: 180,
       pitch: 0,
       url: equirectangularUrl,
       equirectangularUrl,
@@ -135,24 +135,60 @@ export default {
                 targetYaw: -23,
                 targetPitch: 2,
               },
+              {
+                pitch: 12,
+                yaw: -86,
+                type: 'info',
+                text: '电器未使用 电源线未拔下',
+                cssClass: "warning-hotspot",
+                // clickHandlerFunc: () => setShowDrawer(DRAWER_TYPES.CEREMONY)
+              },
+              {
+                pitch: 7,
+                yaw: -71,
+                type: 'info',
+                text: '热水器排气口离电源过近',
+                cssClass: "warning-hotspot",
+                // clickHandlerFunc: () => setShowDrawer(DRAWER_TYPES.CEREMONY)
+              },
+              {
+                pitch: 5,
+                yaw: -140,
+                type: 'info',
+                text: '加热类电器距离过近',
+                cssClass: "warning-hotspot",
+                // clickHandlerFunc: () => setShowDrawer(DRAWER_TYPES.CEREMONY)
+              },
             ],
           },
           liftroom: {
             title: 'Liftroom',
             hfov: 60,
             pitch: -3,
-            yaw: 117,
+            yaw: 180,
             type: 'equirectangular',
             panorama: equirectangularUrlLiftroom,
             hotSpots: [
               {
-                pitch: -10,
+                pitch: -20,
                 yaw: 180,
                 type: 'scene',
                 text: '前进',
                 sceneId: 'frontdoor',
                 targetYaw: 180,
                 targetPitch: 0,
+              },
+              {
+                pitch: -13,
+                yaw: -162,
+                type: 'info',
+                text: '灭火器',
+              },
+              {
+                pitch: -13,
+                yaw: 162,
+                type: 'info',
+                text: '灭火器',
               },
             ],
           },
@@ -174,6 +210,49 @@ export default {
                 targetPitch: 2,
               },
               {
+                pitch: -20,
+                yaw: 20,
+                type: 'info',
+                text: '灭火器',
+              },
+              {
+                pitch: 1,
+                yaw: 141,
+                type: 'scene',
+                text: '进入室内',
+                sceneId: 'livingroom',
+                targetYaw: 50,
+                targetPitch: -8,
+              },
+              {
+                pitch: 15,
+                yaw: -99,
+                type: 'info',
+                text: '常闭式防火门',
+              },
+              {
+                pitch: 0,
+                yaw: -95,
+                type: 'info',
+                text: '常闭式防火门未正常关闭',
+                cssClass: "warning-hotspot",
+                // clickHandlerFunc: () => setShowDrawer(DRAWER_TYPES.CEREMONY)
+              },
+              {
+                pitch: -15,
+                yaw: -79,
+                type: 'info',
+                text: '消防通道内未发现杂物',
+                cssClass: "right-hotspot",
+                // clickHandlerFunc: () => setShowDrawer(DRAWER_TYPES.CEREMONY)
+              },
+              {
+                pitch: -20,
+                yaw: -27,
+                type: 'info',
+                text: '灭火器',
+              },
+              {
                 pitch: 30,
                 yaw: 55.8,
                 type: 'info',
@@ -190,7 +269,7 @@ export default {
                 pitch: -10,
                 yaw: 75,
                 type: 'info',
-                text: '安全隐患',
+                text: '消防栓旁堆放过多物品',
                 cssClass: "warning-hotspot",
                 // clickHandlerFunc: () => setShowDrawer(DRAWER_TYPES.CEREMONY)
               },
@@ -205,8 +284,32 @@ export default {
             panorama: equirectangularUrlLivingroom,
             hotSpots: [
               {
-                pitch: -0.6,
-                yaw: -177.1,
+                pitch: -2.5,
+                yaw: 52,
+                type: 'info',
+                text: '电视电源未关闭',
+                cssClass: "warning-hotspot",
+                // clickHandlerFunc: () => setShowDrawer(DRAWER_TYPES.CEREMONY)
+              },
+              {
+                pitch: 21,
+                yaw: 66,
+                type: 'info',
+                text: '电灯电源未关闭',
+                cssClass: "warning-hotspot",
+                // clickHandlerFunc: () => setShowDrawer(DRAWER_TYPES.CEREMONY)
+              },
+              {
+                pitch: -20,
+                yaw: -143,
+                type: 'info',
+                text: '电源线杂乱',
+                cssClass: "warning-hotspot",
+                // clickHandlerFunc: () => setShowDrawer(DRAWER_TYPES.CEREMONY)
+              },
+              {
+                pitch: 0,
+                yaw: -177,
                 type: 'scene',
                 text: '门口',
                 sceneId: 'frontdoor',
@@ -214,8 +317,8 @@ export default {
                 targetPitch: 2,
               },
               {
-                pitch: -0.6,
-                yaw: -57.1,
+                pitch: 0,
+                yaw: -57,
                 type: 'scene',
                 text: '厨房',
                 sceneId: 'kitchen',
@@ -277,6 +380,21 @@ body,
   width: 40px;
   opacity: 0.9;
   background-image: url("./img/redwarning.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.warning-hotspot span, .right-hotspot span {
+  background: #fff !important;
+  color: #000 !important;
+}
+
+.right-hotspot {
+  height: 40px;
+  width: 40px;
+  opacity: 0.9;
+  background-image: url("./img/right.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
