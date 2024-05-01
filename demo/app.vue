@@ -21,7 +21,7 @@
       <button class="startbtn" @click="url = srcTour">开始</button>
     </v-pannellum>
     <!-- // 控制器 -->
-    <div class="controls">
+    <!-- <div class="controls">
       <label>
         <span>Type:</span>
         <button @click="url = equirectangularUrl">equirect</button>
@@ -52,7 +52,7 @@
         <input type="checkbox" v-model="isOrientationOn" />
         <span>Orientation</span>
       </label>
-    </div>
+    </div> -->
     <!-- // 抽屉 -->
     <div :class="['infodrawer', isDrawerShow ? 'drawershow' : '']">
       <div class="drawer-header">
